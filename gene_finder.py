@@ -194,7 +194,7 @@ def find_all_ORFs(dna):
 
     """
     result = []
-    for i in range(3):  # frame changes from 0~2
+    for i in range(3):  # frame changes from 0 to 2
         result.extend(find_all_ORFs_oneframe(dna[i:]))
     return result
 
@@ -228,6 +228,7 @@ def longest_ORF(dna):
     """
     ORFs = find_all_ORFs_both_strands(dna)
     longest = ''
+    # computes the longest ORF by comparing each ORF with temporary longest ORF
     for ORF in ORFs:
         if(len(ORF) > len(longest)):
             longest = ORF
@@ -243,6 +244,7 @@ def longest_ORF_noncoding(dna, num_trials):
         returns: the maximum length longest ORF """
 
     max_length = 0
+    # computes the maximum length by comparing longest_ORF to temporary maximum
     for i in range(num_trials):
         shuffled_dna = shuffle_string(dna)  # shuffles the dna randomly
         longest = longest_ORF(shuffled_dna)
@@ -285,7 +287,7 @@ def coding_strand_to_AA(dna):
 def gene_finder(dna):
     """ Returns the amino acid sequences that are likely coded by the specified dna
 
-        dna: a DNA sequence (assumed to be all lowercase)
+        dna: a DNA sequence (assumed to be all uppercase)
         returns: a list of all amino acid sequences coded by the sequence dna.
     """
     threshold = longest_ORF_noncoding(dna, 1500)  # computes threshold
